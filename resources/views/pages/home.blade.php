@@ -5,7 +5,7 @@
             <div class="relative z-10 pb-8 bg-primary-900 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
                 <main class="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
                     <div class="sm:text-center lg:text-left pt-12">
-                        <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl font-['Outfit']">
+                        <h1 class="text-4xl tracking-tight font-extrabold text-white sm:text-5xl md:text-6xl font-serif">
                             <span class="block xl:inline">Bersama Bertumbuh dalam</span>
                             <span class="block text-secondary-400">Iman dan Pelayanan</span>
                         </h1>
@@ -48,7 +48,7 @@
     <!-- Blank content filler to show the page works -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div class="text-center">
-            <h2 class="text-3xl font-extrabold text-slate-900 font-['Outfit']">Selamat Datang di Halaman Beranda</h2>
+            <h2 class="text-3xl font-extrabold text-slate-900 font-serif">Selamat Datang di Halaman Beranda</h2>
             <p class="mt-4 text-lg text-slate-500">Silakan gunakan navigasi di atas untuk berpindah halaman.</p>
         </div>
     </div>

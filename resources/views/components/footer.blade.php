@@ -3,7 +3,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <!-- Kolom 1: Nama Gereja -->
             <div class="col-span-1">
-                <span class="text-2xl font-bold text-primary-900 font-['Outfit']">Gereja Modern</span>
+                <span class="text-2xl font-bold text-primary-900 font-serif">Gereja Modern</span>
                 <p class="mt-4 text-slate-600 text-base">
                     Bersama bertumbuh dalam iman dan pelayanan. Melayani jemaat dengan kasih dan dedikasi.
                 </p>

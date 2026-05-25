@@ -3,7 +3,7 @@
         <div class="flex justify-between h-16">
             <!-- Logo -->
             <div class="flex-shrink-0 flex items-center">
-                <a href="{{ route('home') }}" class="text-xl font-bold text-primary-900 font-['Outfit']">
+                <a href="{{ route('home') }}" class="text-xl font-bold text-primary-900 font-serif">
                     Gereja Modern
                 </a>
             </div>
