@@ -20,7 +20,7 @@
 
     <x-navbar />
 
-    <main class="flex-grow">
+    <main class="flex-grow {{ request()->routeIs('home') ? '' : 'pt-16' }}">
         {{ $slot }}
     </main>
 
