@@ -11,6 +11,25 @@
     $kuota = $getVal($event, 'kuota');
     $kuotaTerisi = $getVal($event, 'kuota_terisi', 0);
     $isFull = ($status === 'Kuota Penuh' || ($kuota !== null && $kuota > 0 && $kuotaTerisi >= $kuota));
+
+    // Category Badge Color Map for dark overlay (white text / bright colored borders)
+    $getCategoryHeroBadgeClass = function($category) {
+        $categoryLower = strtolower(trim($category));
+        if (str_contains($categoryLower, 'ibadah')) {
+            return 'bg-blue-500/20 text-blue-300 border border-blue-500/30';
+        } elseif (str_contains($categoryLower, 'pemuda') || str_contains($categoryLower, 'remaja')) {
+            return 'bg-amber-500/20 text-amber-300 border border-amber-500/30';
+        } elseif (str_contains($categoryLower, 'sosial')) {
+            return 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+        } elseif (str_contains($categoryLower, 'doa')) {
+            return 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30';
+        } elseif (str_contains($categoryLower, 'anak')) {
+            return 'bg-rose-500/20 text-rose-300 border border-rose-500/30';
+        } elseif (str_contains($categoryLower, 'keluarga') || str_contains($categoryLower, 'pernikahan')) {
+            return 'bg-teal-500/20 text-teal-300 border border-teal-500/30';
+        }
+        return 'bg-slate-500/20 text-slate-300 border border-slate-500/30';
+    };
 @endphp
 
 <section class="relative w-full h-[450px] md:h-[500px] flex items-end">
@@ -24,7 +43,7 @@
     <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div class="flex flex-wrap gap-2.5 mb-4">
             <!-- Category Badge -->
-            <span class="bg-white/10 backdrop-blur-md text-white px-3 py-1 rounded-full text-xs font-medium border border-white/20 shadow-sm">
+            <span class="backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold shadow-sm {{ $getCategoryHeroBadgeClass($kategori) }}">
                 {{ $kategori }}
             </span>
             
