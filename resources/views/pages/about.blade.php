@@ -1,18 +1,21 @@
 <x-layouts.app>
-    <x-slot name="title">Tentang Kami - Gereja Modern</x-slot>
+    <x-slot name="title">Tentang Kami - Gereja Protestan Maluku</x-slot>
 
-    <!-- Header Kecil -->
-    <div class="bg-primary-900 py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl font-extrabold text-white font-['Outfit']">Tentang Kami</h1>
-            <p class="mt-4 text-xl text-primary-100 max-w-2xl mx-auto">Mengenal lebih dekat visi, misi, dan struktur pelayanan Gereja Modern.</p>
-        </div>
-    </div>
+    <!-- 1. Banner Sederhana -->
+    <x-about.banner />
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div class="text-center">
-            <h2 class="text-3xl font-extrabold text-slate-900 font-['Outfit']">Visi & Misi</h2>
-            <p class="mt-4 text-lg text-slate-500">Halaman ini akan berisi struktur organisasi dan sejarah gereja.</p>
-        </div>
-    </div>
+    <!-- 2. Deskripsi -->
+    <x-about.description />
+
+    <!-- 3. Visi -->
+    <x-about.vision />
+
+    <!-- 4. Misi -->
+    <x-about.mission />
+
+    <!-- 5. Struktur Organisasi -->
+    <x-about.structure />
+
+    <!-- 6. Kontak -->
+    <x-about.contact />
 </x-layouts.app>
