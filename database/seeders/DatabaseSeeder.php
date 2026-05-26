@@ -18,6 +18,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             GerejaSeeder::class,
             StrukturOrganisasiSeeder::class,
+            FaqSeeder::class,
+            JenisKegiatanSeeder::class,
+            PembicaraSeeder::class,
+            KegiatanSeeder::class,
         ]);
     }
 }
