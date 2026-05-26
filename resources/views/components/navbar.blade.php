@@ -11,7 +11,7 @@
                    :class="scrolled ? 'text-primary-900' : 'text-white'"
                    class="flex items-center gap-3 text-xl font-bold font-serif hover:opacity-90 transition-colors duration-300">
                     <img src="{{ asset('assets/logo.png') }}" alt="Logo Gereja" class="h-10 w-auto transition-all duration-300">
-                    <span>Gereja Modern</span>
+                    <span>Gereja Protestan Maluku</span>
                 </a>
             </div>
 
