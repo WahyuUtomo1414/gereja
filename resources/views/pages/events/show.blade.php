@@ -102,4 +102,7 @@
             </div>
         </div>
     </div>
+
+    <!-- Final CTA Section -->
+    <x-home.final-cta />
 </x-layouts.app>

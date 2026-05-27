@@ -57,6 +57,6 @@ class PageController extends Controller
 
     public function contact()
     {
-        return view('pages.contact');
+        return redirect()->to(route('about') . '#kontak');
     }
 }

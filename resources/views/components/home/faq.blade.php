@@ -67,7 +67,7 @@
         </div>
         
         <div class="mt-12 text-center">
-            <p class="text-slate-500">Masih punya pertanyaan? <a href="{{ route('contact') }}" class="text-secondary-600 font-semibold hover:text-secondary-700 hover:underline transition-colors">Hubungi tim kami</a></p>
+            <p class="text-slate-500">Masih punya pertanyaan? <a href="{{ route('about') }}#kontak" class="text-secondary-600 font-semibold hover:text-secondary-700 hover:underline transition-colors">Hubungi tim kami</a></p>
         </div>
     </div>
 </div>

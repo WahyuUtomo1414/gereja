@@ -18,7 +18,7 @@
         </div>
         
         <div class="mt-10 lg:mt-0 lg:ml-8 flex-shrink-0">
-            <a href="{{ route('contact') }}" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-full text-primary-900 bg-white hover:bg-slate-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
+            <a href="{{ route('about') }}#kontak" class="inline-flex items-center justify-center px-8 py-4 border border-transparent text-base font-semibold rounded-full text-primary-900 bg-white hover:bg-slate-50 shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300">
                 Hubungi Kami Sekarang
                 <svg class="ml-3 w-5 h-5 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
             </a>

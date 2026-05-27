@@ -19,8 +19,8 @@
             <a href="{{ route('events.index') }}" class="w-full sm:w-auto px-8 py-4 text-base font-semibold rounded-full text-white bg-primary-900 hover:bg-primary-800 shadow-xl hover:shadow-2xl transform hover:-translate-y-0.5 transition-all duration-300">
                 Daftar Kegiatan Sekarang
             </a>
-            <a href="{{ route('events.propose') }}" class="w-full sm:w-auto px-8 py-4 border-2 border-slate-200 text-base font-semibold rounded-full text-primary-900 bg-white hover:bg-slate-50 hover:border-slate-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-300">
-                Ajukan Acara Baru
+            <a href="{{ route('about') }}" class="w-full sm:w-auto px-8 py-4 border-2 border-slate-200 text-base font-semibold rounded-full text-primary-900 bg-white hover:bg-slate-50 hover:border-slate-300 shadow-sm hover:shadow-md transform hover:-translate-y-0.5 transition-all duration-300">
+                Tentang Kami
             </a>
         </div>
     </div>
