@@ -3,12 +3,12 @@
 namespace App\Filament\Resources\Kegiatans\Schemas;
 
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class KegiatanForm
@@ -18,6 +18,7 @@ class KegiatanForm
         return $schema
             ->components([
                 Section::make('Informasi Kegiatan')
+                    ->columnSpanFull()
                     ->schema([
                         Select::make('jenis_kegiatan_id')
                             ->label('Jenis Kegiatan')
@@ -50,6 +51,7 @@ class KegiatanForm
                     ])
                     ->columns(2),
                 Section::make('Jadwal & Lokasi')
+                    ->columnSpanFull()
                     ->schema([
                         DatePicker::make('tanggal')
                             ->label('Tanggal')
@@ -68,6 +70,7 @@ class KegiatanForm
                     ])
                     ->columns(3),
                 Section::make('Publikasi')
+                    ->columnSpanFull()
                     ->schema([
                         TextInput::make('kuota')
                             ->label('Kuota')

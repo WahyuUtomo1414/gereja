@@ -3,11 +3,11 @@
 namespace App\Filament\Resources\Gerejas\Schemas;
 
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class GerejaForm
@@ -17,6 +17,7 @@ class GerejaForm
         return $schema
             ->components([
                 Section::make('Informasi Gereja')
+                    ->columnSpanFull()
                     ->schema([
                         TextInput::make('nama')
                             ->label('Nama Gereja')
@@ -40,6 +41,7 @@ class GerejaForm
                     ])
                     ->columns(2),
                 Section::make('Profil & Konten')
+                    ->columnSpanFull()
                     ->schema([
                         Textarea::make('deskripsi')
                             ->label('Deskripsi')

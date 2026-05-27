@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\JenisKegiatans\Schemas;
 
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class JenisKegiatanForm
@@ -15,6 +15,7 @@ class JenisKegiatanForm
         return $schema
             ->components([
                 Section::make('Form Jenis Kegiatan')
+                    ->columnSpanFull()
                     ->schema([
                         TextInput::make('nama')
                             ->label('Nama')

@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources\Faqs\Schemas;
 
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class FaqForm
@@ -14,6 +14,7 @@ class FaqForm
         return $schema
             ->components([
                 Section::make('Form FAQ')
+                    ->columnSpanFull()
                     ->schema([
                         Textarea::make('pertanyaan')
                             ->label('Pertanyaan')

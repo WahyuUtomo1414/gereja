@@ -2,11 +2,11 @@
 
 namespace App\Filament\Resources\Jemaats\Schemas;
 
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class JemaatForm
@@ -16,6 +16,7 @@ class JemaatForm
         return $schema
             ->components([
                 Section::make('Form Jemaat')
+                    ->columnSpanFull()
                     ->schema([
                         Select::make('user_id')
                             ->label('User')

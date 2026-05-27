@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\Pesertas\Schemas;
 
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class PesertaForm
@@ -15,6 +15,7 @@ class PesertaForm
         return $schema
             ->components([
                 Section::make('Form Peserta')
+                    ->columnSpanFull()
                     ->schema([
                         Select::make('kegiatan_id')
                             ->label('Kegiatan')

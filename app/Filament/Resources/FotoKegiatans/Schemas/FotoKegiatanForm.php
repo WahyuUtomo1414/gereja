@@ -2,10 +2,10 @@
 
 namespace App\Filament\Resources\FotoKegiatans\Schemas;
 
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class FotoKegiatanForm
@@ -15,6 +15,7 @@ class FotoKegiatanForm
         return $schema
             ->components([
                 Section::make('Form Foto Kegiatan')
+                    ->columnSpanFull()
                     ->schema([
                         Select::make('kegiatan_id')
                             ->label('Kegiatan')
