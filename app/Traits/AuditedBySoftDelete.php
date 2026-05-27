@@ -8,17 +8,22 @@ use Illuminate\Support\Facades\Auth;
 
 trait AuditedBySoftDelete
 {
+    protected static function resolveAuditUserId(): int
+    {
+        return Auth::id() ?? 1;
+    }
+
     public static function bootAuditedBySoftDelete()
     {
         static::creating(function ($model) {
             if (!$model->isDirty('created_by')) {
-                $model->created_by = Auth::id();
+                $model->created_by = static::resolveAuditUserId();
             }
         });
 
         static::updating(function ($model) {
             if (!$model->isDirty('updated_by')) {
-                $model->updated_by = Auth::id();
+                $model->updated_by = static::resolveAuditUserId();
             }
         });
 
@@ -27,7 +32,7 @@ trait AuditedBySoftDelete
                 return;
             }
 
-            $model->deleted_by = Auth::id();
+            $model->deleted_by = static::resolveAuditUserId();
             $model->saveQuietly();
         });
 

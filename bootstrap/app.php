@@ -3,6 +3,8 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use App\Http\Middleware\AuthenticateFilamentPanel;
+use App\Http\Middleware\EnsureJemaat;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -11,7 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->redirectGuestsTo(fn () => route('login'));
+        $middleware->redirectUsersTo(fn () => route('dashboard'));
+        $middleware->alias([
+            'filament.auth' => AuthenticateFilamentPanel::class,
+            'jamaat' => EnsureJemaat::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
