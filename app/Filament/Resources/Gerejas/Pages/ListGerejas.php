@@ -3,17 +3,28 @@
 namespace App\Filament\Resources\Gerejas\Pages;
 
 use App\Filament\Resources\Gerejas\GerejaResource;
-use Filament\Actions\CreateAction;
+use App\Models\Gereja;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ListGerejas extends ListRecords
 {
     protected static string $resource = GerejaResource::class;
 
-    protected function getHeaderActions(): array
+    public function mount(): void
     {
-        return [
-            CreateAction::make(),
-        ];
+        $record = Gereja::query()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ])
+            ->first();
+
+        if ($record) {
+            $this->redirect(GerejaResource::getUrl('view', ['record' => $record]));
+
+            return;
+        }
+
+        $this->redirect(GerejaResource::getUrl('create'));
     }
 }

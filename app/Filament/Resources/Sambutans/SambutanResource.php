@@ -20,7 +20,7 @@ class SambutanResource extends Resource
 {
     protected static ?string $model = Sambutan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chat-bubble-left-right';
 
     protected static string|UnitEnum|null $navigationGroup = 'Master Website';
 

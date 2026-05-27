@@ -20,7 +20,7 @@ class PembicaraResource extends Resource
 {
     protected static ?string $model = Pembicara::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-megaphone';
 
     protected static string|UnitEnum|null $navigationGroup = 'Master Kegiatan';
 

@@ -20,7 +20,7 @@ class JemaatResource extends Resource
 {
     protected static ?string $model = Jemaat::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-user-group';
 
     protected static string|UnitEnum|null $navigationGroup = 'Jemaat & Partisipasi';
 

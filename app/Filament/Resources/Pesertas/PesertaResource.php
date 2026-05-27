@@ -20,7 +20,7 @@ class PesertaResource extends Resource
 {
     protected static ?string $model = Peserta::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-clipboard-document-check';
 
     protected static string|UnitEnum|null $navigationGroup = 'Jemaat & Partisipasi';
 

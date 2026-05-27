@@ -20,7 +20,7 @@ class FotoKegiatanResource extends Resource
 {
     protected static ?string $model = FotoKegiatan::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-photo';
 
     protected static string|UnitEnum|null $navigationGroup = 'Master Kegiatan';
 
