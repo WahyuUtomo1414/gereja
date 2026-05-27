@@ -1,3 +1,7 @@
+@props([
+    'gereja' => null,
+])
+
 <div id="kontak" class="py-24 bg-white border-t border-slate-100">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col lg:flex-row gap-16">
@@ -18,7 +22,7 @@
                         <div>
                             <h4 class="font-bold text-primary-900 mb-1">Alamat Pusat</h4>
                             <p class="text-slate-500 text-sm leading-relaxed">
-                                Jl. Mayor Jenderal DI Panjaitan No.2<br>Uritetu, Sirimau, Kota Ambon<br>Maluku 97124
+                                {{ $gereja?->alamat ?? 'Alamat gereja belum tersedia.' }}
                             </p>
                         </div>
                     </div>
@@ -30,7 +34,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-primary-900 mb-1">Telepon</h4>
-                            <p class="text-slate-500 text-sm leading-relaxed">+62 911 354004</p>
+                            <p class="text-slate-500 text-sm leading-relaxed">{{ $gereja?->no_tlpn ?? '-' }}</p>
                         </div>
                     </div>
 
@@ -41,7 +45,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-primary-900 mb-1">Email</h4>
-                            <p class="text-slate-500 text-sm leading-relaxed">gereja.protestan.maluku@gmail.com</p>
+                            <p class="text-slate-500 text-sm leading-relaxed">{{ $gereja?->email ?? '-' }}</p>
                         </div>
                     </div>
                 </div>
