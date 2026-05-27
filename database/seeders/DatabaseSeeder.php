@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             JemaatSeeder::class,
             GerejaSeeder::class,
+            SambutanSeeder::class,
             StrukturOrganisasiSeeder::class,
             FaqSeeder::class,
             JenisKegiatanSeeder::class,
