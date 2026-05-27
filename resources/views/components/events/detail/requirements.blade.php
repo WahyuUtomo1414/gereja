@@ -1,29 +1,24 @@
-@props(['event', 'getVal'])
+@props(['requirements' => null])
 
-@php
-    $syarat = $getVal($event, 'kebutuhan_kegiatan') ?: $getVal($event, 'syarat_ketentuan');
-@endphp
-
-@if($syarat)
-    <div class="bg-white rounded-2xl p-8 border border-slate-100 shadow-sm">
-        <h2 class="text-xl md:text-2xl font-bold font-serif text-primary-900 mb-6 border-b border-slate-50 pb-3">
+@if ($requirements)
+    <div class="rounded-2xl border border-slate-100 bg-white p-8 shadow-sm">
+        <h2 class="mb-6 border-b border-slate-50 pb-3 font-serif text-xl font-bold text-primary-900 md:text-2xl">
             Syarat Mengikuti
         </h2>
-        <ul class="text-sm text-slate-600 font-light leading-relaxed space-y-3 mb-8 list-disc list-inside">
-            @if(str_contains($syarat, '<li>'))
-                {!! $syarat !!}
+        <ul class="mb-8 list-inside list-disc space-y-3 text-sm leading-relaxed font-light text-slate-600">
+            @if (str_contains($requirements, '<li>'))
+                {!! $requirements !!}
             @else
-                @foreach(explode("\n", str_replace("\r", "", $syarat)) as $line)
-                    @if(trim($line))
+                @foreach (explode("\n", str_replace("\r", '', $requirements)) as $line)
+                    @if (trim($line))
                         <li>{{ trim($line) }}</li>
                     @endif
                 @endforeach
             @endif
         </ul>
-        
-        <!-- Share Button -->
-        <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link kegiatan berhasil disalin!');" 
-                class="flex items-center gap-2 border border-slate-200 text-primary-900 font-sans text-xs font-semibold px-6 py-3.5 rounded-full hover:bg-slate-50 active:scale-[0.98] transition-all">
+
+        <button onclick="navigator.clipboard.writeText(window.location.href); alert('Link kegiatan berhasil disalin!');"
+                class="flex items-center gap-2 rounded-full border border-slate-200 px-6 py-3.5 font-sans text-xs font-semibold text-primary-900 transition-all hover:bg-slate-50 active:scale-[0.98]">
             <span class="material-symbols-outlined text-sm">share</span>
             Bagikan Kegiatan
         </button>

@@ -8,10 +8,10 @@
         <!-- Filters & Grid Layout -->
         <div class="flex flex-col lg:flex-row gap-8 mt-12">
             <!-- Sidebar / Filters -->
-            <x-events.sidebar />
+            <x-events.sidebar :kategori="$kategori" :filters="$filters" />
 
             <!-- Main Grid List -->
-            <x-events.grid :kegiatan="$kegiatan ?? null" />
+            <x-events.grid :kegiatan="$kegiatan" />
         </div>
     </div>
 </x-layouts.app>
