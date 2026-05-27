@@ -12,24 +12,28 @@ trait AuditedBySoftDelete
     {
         static::creating(function ($model) {
             if (!$model->isDirty('created_by')) {
-                $model->created_by = Auth::user()->id ?? null;
+                $model->created_by = Auth::id();
             }
         });
 
         static::updating(function ($model) {
             if (!$model->isDirty('updated_by')) {
-                $model->updated_by = Auth::user()->id ?? null;
+                $model->updated_by = Auth::id();
             }
         });
 
         static::deleting(function ($model) {
-            $model->deleted_by = Auth::user()->id ?? null;
-            $model->save();
+            if ($model->isForceDeleting()) {
+                return;
+            }
+
+            $model->deleted_by = Auth::id();
+            $model->saveQuietly();
         });
 
         static::restoring(function ($model) {
             $model->deleted_by = null;
-            $model->save();
+            $model->saveQuietly();
         });
     }
 

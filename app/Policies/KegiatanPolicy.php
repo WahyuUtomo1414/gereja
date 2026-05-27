@@ -4,72 +4,90 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Kegiatan;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class KegiatanPolicy
 {
     use HandlesAuthorization;
-    
-    public function viewAny(AuthUser $authUser): bool
+
+    public function before(User $user, string $ability): ?bool
     {
-        return $authUser->can('ViewAny:Kegiatan');
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        return null;
     }
 
-    public function view(AuthUser $authUser, Kegiatan $kegiatan): bool
+    public function viewAny(User $user): bool
     {
-        return $authUser->can('View:Kegiatan');
+        return $user->isKetuaPelaksana() || $user->isSekertaris();
     }
 
-    public function create(AuthUser $authUser): bool
+    public function view(User $user, Kegiatan $kegiatan): bool
     {
-        return $authUser->can('Create:Kegiatan');
+        if ($user->isSekertaris()) {
+            return true;
+        }
+
+        return $user->isKetuaPelaksana() && $kegiatan->isOwnedBy($user);
     }
 
-    public function update(AuthUser $authUser, Kegiatan $kegiatan): bool
+    public function create(User $user): bool
     {
-        return $authUser->can('Update:Kegiatan');
+        return $user->isKetuaPelaksana();
     }
 
-    public function delete(AuthUser $authUser, Kegiatan $kegiatan): bool
+    public function update(User $user, Kegiatan $kegiatan): bool
     {
-        return $authUser->can('Delete:Kegiatan');
+        if ($user->isSekertaris()) {
+            return true;
+        }
+
+        return $user->isKetuaPelaksana() && $kegiatan->isOwnedBy($user);
     }
 
-    public function deleteAny(AuthUser $authUser): bool
+    public function delete(User $user, Kegiatan $kegiatan): bool
     {
-        return $authUser->can('DeleteAny:Kegiatan');
+        return $user->isKetuaPelaksana()
+            && $kegiatan->isOwnedBy($user)
+            && $kegiatan->canBeEditedByKetua();
     }
 
-    public function restore(AuthUser $authUser, Kegiatan $kegiatan): bool
+    public function deleteAny(User $user): bool
     {
-        return $authUser->can('Restore:Kegiatan');
+        return false;
     }
 
-    public function forceDelete(AuthUser $authUser, Kegiatan $kegiatan): bool
+    public function restore(User $user, Kegiatan $kegiatan): bool
     {
-        return $authUser->can('ForceDelete:Kegiatan');
+        return false;
     }
 
-    public function forceDeleteAny(AuthUser $authUser): bool
+    public function forceDelete(User $user, Kegiatan $kegiatan): bool
     {
-        return $authUser->can('ForceDeleteAny:Kegiatan');
+        return false;
     }
 
-    public function restoreAny(AuthUser $authUser): bool
+    public function forceDeleteAny(User $user): bool
     {
-        return $authUser->can('RestoreAny:Kegiatan');
+        return false;
     }
 
-    public function replicate(AuthUser $authUser, Kegiatan $kegiatan): bool
+    public function restoreAny(User $user): bool
     {
-        return $authUser->can('Replicate:Kegiatan');
+        return false;
     }
 
-    public function reorder(AuthUser $authUser): bool
+    public function replicate(User $user, Kegiatan $kegiatan): bool
     {
-        return $authUser->can('Reorder:Kegiatan');
+        return false;
     }
 
+    public function reorder(User $user): bool
+    {
+        return false;
+    }
 }

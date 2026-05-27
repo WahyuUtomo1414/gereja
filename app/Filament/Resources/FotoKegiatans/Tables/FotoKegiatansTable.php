@@ -26,10 +26,11 @@ class FotoKegiatansTable
                     ->label('Kegiatan')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('nama')
-                    ->label('Nama Foto')
+                TextColumn::make('caption')
+                    ->label('Caption')
                     ->searchable()
                     ->sortable()
+                    ->wrap()
                     ->placeholder('-'),
                 TextColumn::make('foto')
                     ->label('Foto')

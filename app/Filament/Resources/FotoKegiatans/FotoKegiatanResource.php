@@ -42,10 +42,29 @@ class FotoKegiatanResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
+        $query = parent::getEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+
+        $user = auth()->user();
+
+        if ($user?->isKetuaPelaksana()) {
+            $query->whereHas('kegiatan', fn (Builder $builder) => $builder->where('created_by', $user->id));
+        }
+
+        if (! $user?->isSuperAdmin() && ! $user?->isSekertaris() && ! $user?->isKetuaPelaksana()) {
+            $query->whereRaw('1 = 0');
+        }
+
+        return $query;
+    }
+
+    public static function canAccess(): bool
+    {
+        $user = auth()->user();
+
+        return (bool) ($user?->isSuperAdmin() || $user?->isSekertaris() || $user?->isKetuaPelaksana());
     }
 
     public static function getRelations(): array
@@ -66,9 +85,17 @@ class FotoKegiatanResource extends Resource
 
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
-        return parent::getRecordRouteBindingEloquentQuery()
+        $query = parent::getRecordRouteBindingEloquentQuery()
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+
+        $user = auth()->user();
+
+        if ($user?->isKetuaPelaksana()) {
+            $query->whereHas('kegiatan', fn (Builder $builder) => $builder->where('created_by', $user->id));
+        }
+
+        return $query;
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use App\Enums\RoleUser;
 use BezhanSalleh\FilamentShield\Traits\HasPanelShield;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -20,6 +21,26 @@ class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasRoles, HasPanelShield;
+
+    public function isSuperAdmin(): bool
+    {
+        return $this->hasRole(RoleUser::SUPER_ADMIN->value);
+    }
+
+    public function isKetuaPelaksana(): bool
+    {
+        return $this->hasRole(RoleUser::KETUA_PELAKSANA->value);
+    }
+
+    public function isSekertaris(): bool
+    {
+        return $this->hasRole(RoleUser::SEKERTARIS->value);
+    }
+
+    public function isJamaat(): bool
+    {
+        return $this->hasRole(RoleUser::JAMAAT->value);
+    }
 
     public function jemaat(): HasOne
     {

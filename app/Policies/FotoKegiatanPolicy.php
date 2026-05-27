@@ -4,72 +4,87 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
-use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\FotoKegiatan;
+use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class FotoKegiatanPolicy
 {
     use HandlesAuthorization;
-    
-    public function viewAny(AuthUser $authUser): bool
+
+    public function before(User $user, string $ability): ?bool
     {
-        return $authUser->can('ViewAny:FotoKegiatan');
+        if ($user->isSuperAdmin()) {
+            return true;
+        }
+
+        return null;
     }
 
-    public function view(AuthUser $authUser, FotoKegiatan $fotoKegiatan): bool
+    public function viewAny(User $user): bool
     {
-        return $authUser->can('View:FotoKegiatan');
+        return $user->isKetuaPelaksana() || $user->isSekertaris();
     }
 
-    public function create(AuthUser $authUser): bool
+    public function view(User $user, FotoKegiatan $fotoKegiatan): bool
     {
-        return $authUser->can('Create:FotoKegiatan');
+        if ($user->isSekertaris()) {
+            return true;
+        }
+
+        return $user->isKetuaPelaksana()
+            && $fotoKegiatan->kegiatan
+            && $fotoKegiatan->kegiatan->isOwnedBy($user)
+            && $fotoKegiatan->kegiatan->canManageReport();
     }
 
-    public function update(AuthUser $authUser, FotoKegiatan $fotoKegiatan): bool
+    public function create(User $user): bool
     {
-        return $authUser->can('Update:FotoKegiatan');
+        return $user->isKetuaPelaksana() || $user->isSekertaris();
     }
 
-    public function delete(AuthUser $authUser, FotoKegiatan $fotoKegiatan): bool
+    public function update(User $user, FotoKegiatan $fotoKegiatan): bool
     {
-        return $authUser->can('Delete:FotoKegiatan');
+        return $this->view($user, $fotoKegiatan);
     }
 
-    public function deleteAny(AuthUser $authUser): bool
+    public function delete(User $user, FotoKegiatan $fotoKegiatan): bool
     {
-        return $authUser->can('DeleteAny:FotoKegiatan');
+        return $this->view($user, $fotoKegiatan);
     }
 
-    public function restore(AuthUser $authUser, FotoKegiatan $fotoKegiatan): bool
+    public function deleteAny(User $user): bool
     {
-        return $authUser->can('Restore:FotoKegiatan');
+        return false;
     }
 
-    public function forceDelete(AuthUser $authUser, FotoKegiatan $fotoKegiatan): bool
+    public function restore(User $user, FotoKegiatan $fotoKegiatan): bool
     {
-        return $authUser->can('ForceDelete:FotoKegiatan');
+        return false;
     }
 
-    public function forceDeleteAny(AuthUser $authUser): bool
+    public function forceDelete(User $user, FotoKegiatan $fotoKegiatan): bool
     {
-        return $authUser->can('ForceDeleteAny:FotoKegiatan');
+        return false;
     }
 
-    public function restoreAny(AuthUser $authUser): bool
+    public function forceDeleteAny(User $user): bool
     {
-        return $authUser->can('RestoreAny:FotoKegiatan');
+        return false;
     }
 
-    public function replicate(AuthUser $authUser, FotoKegiatan $fotoKegiatan): bool
+    public function restoreAny(User $user): bool
     {
-        return $authUser->can('Replicate:FotoKegiatan');
+        return false;
     }
 
-    public function reorder(AuthUser $authUser): bool
+    public function replicate(User $user, FotoKegiatan $fotoKegiatan): bool
     {
-        return $authUser->can('Reorder:FotoKegiatan');
+        return false;
     }
 
+    public function reorder(User $user): bool
+    {
+        return false;
+    }
 }

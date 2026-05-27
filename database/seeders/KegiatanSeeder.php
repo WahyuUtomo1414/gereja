@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Enums\StatusKegiatan;
 use App\Models\JenisKegiatan;
 use App\Models\Kegiatan;
 use App\Models\Pembicara;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class KegiatanSeeder extends Seeder
@@ -14,6 +16,8 @@ class KegiatanSeeder extends Seeder
      */
     public function run(): void
     {
+        $ketuaPelaksana = User::query()->where('email', 'ketua.panitia@gereja.test')->first();
+
         $ibadah = JenisKegiatan::where('nama', 'Ibadah')->firstOrFail();
         $pemuda = JenisKegiatan::where('nama', 'Pemuda/Remaja')->firstOrFail();
         $sosial = JenisKegiatan::where('nama', 'Sosial')->firstOrFail();
@@ -38,7 +42,7 @@ class KegiatanSeeder extends Seeder
                 'thumbnail' => 'https://images.unsplash.com/photo-1544427928-c49cd7f40173?auto=format&fit=crop&w=1200&q=80',
                 'foto' => null,
                 'kebutuhan_kegiatan' => 'Jemaat diharapkan hadir 15 menit sebelum ibadah dimulai dan menjaga ketertiban selama ibadah berlangsung.',
-                'status' => 'Pendaftaran Dibuka',
+                'status' => StatusKegiatan::PENDAFTARAN_DIBUKA->value,
             ],
             [
                 'slug' => 'ibadah-padang-pemuda',
@@ -55,7 +59,7 @@ class KegiatanSeeder extends Seeder
                 'thumbnail' => 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1200&q=80',
                 'foto' => null,
                 'kebutuhan_kegiatan' => 'Peserta membawa Alkitab, alat tulis, air minum pribadi, dan mengenakan pakaian yang sopan serta nyaman untuk kegiatan luar ruangan.',
-                'status' => 'Pendaftaran Dibuka',
+                'status' => StatusKegiatan::PENDAFTARAN_DIBUKA->value,
             ],
             [
                 'slug' => 'bakti-sosial-desa-mekar',
@@ -72,7 +76,7 @@ class KegiatanSeeder extends Seeder
                 'thumbnail' => 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80',
                 'foto' => null,
                 'kebutuhan_kegiatan' => 'Peserta pelayanan diharapkan hadir tepat waktu, membawa perlengkapan pribadi secukupnya, dan siap mengikuti briefing panitia sebelum keberangkatan.',
-                'status' => 'Pendaftaran Dibuka',
+                'status' => StatusKegiatan::PENDAFTARAN_DIBUKA->value,
             ],
         ];
 
@@ -95,8 +99,8 @@ class KegiatanSeeder extends Seeder
                     'kebutuhan_kegiatan' => $item['kebutuhan_kegiatan'],
                     'status' => $item['status'],
                     'active' => true,
-                    'created_by' => 1,
-                    'updated_by' => 1,
+                    'created_by' => $ketuaPelaksana?->id ?? 1,
+                    'updated_by' => $ketuaPelaksana?->id ?? 1,
                 ]
             );
         }

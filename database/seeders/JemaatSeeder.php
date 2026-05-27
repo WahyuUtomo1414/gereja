@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleUser;
 use App\Models\Jemaat;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -49,7 +50,7 @@ class JemaatSeeder extends Seeder
                 ]
             );
 
-            $user->syncRoles(['jamaat']);
+            $user->syncRoles([RoleUser::JAMAAT->value]);
 
             Jemaat::query()->updateOrCreate(
                 ['user_id' => $user->id],

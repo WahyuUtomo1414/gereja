@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Kegiatans\Tables;
 
+use App\Enums\StatusKegiatan;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -52,10 +53,17 @@ class KegiatansTable
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
+                    ->formatStateUsing(fn ($state): string => $state instanceof StatusKegiatan ? $state->label() : (StatusKegiatan::tryFrom((string) $state)?->label() ?? (string) $state))
+                    ->color(fn ($state): string => $state instanceof StatusKegiatan ? $state->color() : (StatusKegiatan::tryFrom((string) $state)?->color() ?? 'gray'))
                     ->sortable(),
                 IconColumn::make('active')
                     ->label('Aktif')
                     ->boolean(),
+                TextColumn::make('reviewedBy.name')
+                    ->label('Direview Oleh')
+                    ->badge()
+                    ->placeholder('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('createdBy.name')
                     ->label('Dibuat Oleh')
                     ->badge()

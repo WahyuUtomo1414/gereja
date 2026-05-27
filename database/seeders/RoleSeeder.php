@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\RoleUser;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
@@ -18,12 +19,7 @@ class RoleSeeder extends Seeder
 
         $guardName = 'web';
 
-        $roles = [
-            'super_admin',
-            'ketua pelaksana',
-            'sekertaris',
-            'jamaat',
-        ];
+        $roles = RoleUser::values();
 
         foreach ($roles as $roleName) {
             Role::query()->updateOrCreate(
@@ -35,10 +31,10 @@ class RoleSeeder extends Seeder
         }
 
         $assignments = [
-            'admin@gmail.com' => 'super_admin',
-            'ketua.panitia@gereja.test' => 'ketua pelaksana',
-            'sekertaris@gereja.test' => 'sekertaris',
-            'jamaat@gereja.test' => 'jamaat',
+            'admin@gereja.test' => RoleUser::SUPER_ADMIN->value,
+            'ketua.panitia@gereja.test' => RoleUser::KETUA_PELAKSANA->value,
+            'sekertaris@gereja.test' => RoleUser::SEKERTARIS->value,
+            'jamaat@gereja.test' => RoleUser::JAMAAT->value,
         ];
 
         foreach ($assignments as $email => $roleName) {

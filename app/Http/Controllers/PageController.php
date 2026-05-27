@@ -2,12 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\KegiatanStatusService;
 
 class PageController extends Controller
 {
+    public function __construct(
+        protected KegiatanStatusService $kegiatanStatusService,
+    ) {}
+
     public function home()
     {
+        $this->kegiatanStatusService->markExpiredActivitiesAsFinished();
+
         return view('pages.home');
     }
 
@@ -18,21 +24,29 @@ class PageController extends Controller
 
     public function events()
     {
+        $this->kegiatanStatusService->markExpiredActivitiesAsFinished();
+
         return view('pages.events.index');
     }
 
     public function eventShow($id)
     {
+        $this->kegiatanStatusService->markExpiredActivitiesAsFinished();
+
         return view('pages.events.show', compact('id'));
     }
 
     public function docs()
     {
+        $this->kegiatanStatusService->markExpiredActivitiesAsFinished();
+
         return view('pages.docs.index');
     }
 
     public function docShow($id)
     {
+        $this->kegiatanStatusService->markExpiredActivitiesAsFinished();
+
         return view('pages.docs.show', compact('id'));
     }
 

@@ -4,7 +4,7 @@ namespace App\Filament\Resources\FotoKegiatans\Schemas;
 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -24,9 +24,9 @@ class FotoKegiatanForm
                             ->searchable()
                             ->preload()
                             ->required(),
-                        TextInput::make('nama')
-                            ->label('Nama Foto')
-                            ->maxLength(128),
+                        Textarea::make('caption')
+                            ->label('Caption')
+                            ->rows(3),
                         FileUpload::make('foto')
                             ->label('Foto')
                             ->disk('public')
