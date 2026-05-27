@@ -3,6 +3,8 @@
 namespace App\Filament\Resources\Kegiatans\Schemas;
 
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
@@ -44,9 +46,8 @@ class KegiatanForm
                             ->label('Ringkasan')
                             ->maxLength(255)
                             ->columnSpanFull(),
-                        Textarea::make('deskripsi')
+                        RichEditor::make('deskripsi')
                             ->label('Deskripsi')
-                            ->rows(5)
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
@@ -88,13 +89,20 @@ class KegiatanForm
                         Toggle::make('active')
                             ->label('Aktif')
                             ->default(true),
-                        TextInput::make('thumbnail')
-                            ->label('Path / URL Thumbnail')
-                            ->maxLength(255)
+                        FileUpload::make('thumbnail')
+                            ->label('Thumbnail')
+                            ->disk('public')
+                            ->directory('kegiatan')
+                            ->image()
+                            ->imageEditor()
                             ->columnSpanFull(),
-                        TextInput::make('foto')
-                            ->label('Path / URL Foto')
-                            ->maxLength(255)
+                        FileUpload::make('foto')
+                            ->label('Foto')
+                            ->disk('public')
+                            ->directory('kegiatan')
+                            ->image()
+                            ->multiple()
+                            ->reorderable()
                             ->columnSpanFull(),
                         Textarea::make('kebutuhan_kegiatan')
                             ->label('Kebutuhan Kegiatan')

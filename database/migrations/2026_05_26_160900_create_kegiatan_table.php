@@ -28,7 +28,7 @@ return new class extends Migration
             $table->foreignId('pembicara_id')->nullable()->constrained('pembicara');
             $table->unsignedInteger('kuota')->nullable();
             $table->string('thumbnail')->nullable();
-            $table->string('foto')->nullable();
+            $table->text('foto')->nullable();
             $table->text('kebutuhan_kegiatan')->nullable();
             $table->string('status', 128);
             $this->base($table);

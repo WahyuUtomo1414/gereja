@@ -23,6 +23,7 @@ class Kegiatan extends Model
             'jam_mulai' => 'string',
             'jam_selesai' => 'string',
             'kuota' => 'integer',
+            'foto' => 'array',
             'active' => 'boolean',
         ];
     }

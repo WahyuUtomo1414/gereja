@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\Gerejas\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Forms\Components\RichEditor;
+use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
@@ -23,9 +25,12 @@ class GerejaForm
                             ->label('Nama Gereja')
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('logo')
-                            ->label('Path / URL Logo')
-                            ->maxLength(255),
+                        FileUpload::make('logo')
+                            ->label('Logo')
+                            ->disk('public')
+                            ->directory('gereja')
+                            ->image()
+                            ->imageEditor(),
                         TextInput::make('no_tlpn')
                             ->label('No. Telepon')
                             ->tel()
@@ -43,13 +48,11 @@ class GerejaForm
                 Section::make('Profil & Konten')
                     ->columnSpanFull()
                     ->schema([
-                        Textarea::make('deskripsi')
+                        RichEditor::make('deskripsi')
                             ->label('Deskripsi')
-                            ->rows(5)
                             ->columnSpanFull(),
                         Textarea::make('visi')
                             ->label('Visi')
-                            ->rows(4)
                             ->columnSpanFull(),
                         TagsInput::make('misi')
                             ->label('Misi')

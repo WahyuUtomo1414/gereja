@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\FotoKegiatans\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -26,10 +27,14 @@ class FotoKegiatanForm
                         TextInput::make('nama')
                             ->label('Nama Foto')
                             ->maxLength(128),
-                        TextInput::make('foto')
-                            ->label('Path / URL Foto')
+                        FileUpload::make('foto')
+                            ->label('Foto')
+                            ->disk('public')
+                            ->directory('foto_kegiatan')
+                            ->image()
+                            ->imageEditor()
                             ->required()
-                            ->maxLength(255),
+                            ->columnSpanFull(),
                         Toggle::make('active')
                             ->label('Aktif')
                             ->default(true),
