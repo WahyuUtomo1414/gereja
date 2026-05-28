@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class Kegiatan extends Model
 {
@@ -37,6 +38,13 @@ class Kegiatan extends Model
     {
         static::creating(function (self $kegiatan): void {
             $kegiatan->status ??= StatusKegiatan::MENUNGGU_REVIEW;
+            $kegiatan->slug = static::generateUniqueSlug($kegiatan->nama, null);
+        });
+
+        static::updating(function (self $kegiatan): void {
+            if ($kegiatan->isDirty('nama')) {
+                $kegiatan->slug = static::generateUniqueSlug($kegiatan->nama, $kegiatan->id);
+            }
         });
     }
 
@@ -111,5 +119,23 @@ class Kegiatan extends Model
     public function canManageReport(): bool
     {
         return $this->status->canManageReport();
+    }
+
+    protected static function generateUniqueSlug(?string $name, ?int $ignoreId): string
+    {
+        $baseSlug = Str::slug((string) $name);
+        $baseSlug = $baseSlug !== '' ? $baseSlug : 'kegiatan';
+        $slug = $baseSlug;
+        $suffix = 2;
+
+        while (static::query()
+            ->when($ignoreId, fn (Builder $query) => $query->whereKeyNot($ignoreId))
+            ->where('slug', $slug)
+            ->exists()) {
+            $slug = $baseSlug . '-' . $suffix;
+            $suffix++;
+        }
+
+        return $slug;
     }
 }

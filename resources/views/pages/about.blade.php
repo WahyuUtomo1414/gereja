@@ -5,7 +5,7 @@
     <x-about.banner :gereja="$gereja" />
 
     <!-- 2. Deskripsi -->
-    <x-about.description :gereja="$gereja" />
+    <x-about.description :gereja="$gereja" :logo-url="$logoUrl" />
 
     <!-- 3. Visi -->
     <x-about.vision :gereja="$gereja" />

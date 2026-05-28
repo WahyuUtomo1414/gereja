@@ -26,4 +26,16 @@ class FotoKegiatan extends Model
     {
         return $this->belongsTo(Kegiatan::class);
     }
+
+    public function setNamaAttribute(?string $value): void
+    {
+        $this->attributes['nama'] = $value;
+        $this->attributes['caption'] = $value;
+    }
+
+    public function setCaptionAttribute(?string $value): void
+    {
+        $this->attributes['caption'] = $value;
+        $this->attributes['nama'] = $value;
+    }
 }

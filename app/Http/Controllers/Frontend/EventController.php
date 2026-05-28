@@ -132,7 +132,7 @@ class EventController extends Controller
             'kuota_terisi' => $item->peserta_count,
             'is_full' => $isFull,
             'status' => $item->status->value,
-            'thumbnail_url' => $item->thumbnail ? (str_starts_with($item->thumbnail, 'http') ? $item->thumbnail : asset('storage/'.$item->thumbnail)) : null,
+            'thumbnail_url' => $this->resolveImageUrl($item->thumbnail),
             'kategori' => $item->jenisKegiatan?->nama ?? 'Kegiatan Gereja',
             'detail_url' => route('events.show', $item->slug ?: $item->id),
         ];
@@ -162,13 +162,13 @@ class EventController extends Controller
             'status_label' => $isFull
                 ? 'Kuota Penuh'
                 : ($item->status === StatusKegiatan::PENDAFTARAN_DIBUKA ? 'Pendaftaran Dibuka' : 'Pendaftaran Ditutup'),
-            'foto_url' => $item->thumbnail ? (str_starts_with($item->thumbnail, 'http') ? $item->thumbnail : asset('storage/'.$item->thumbnail)) : null,
+            'foto_url' => $this->resolveImageUrl($item->thumbnail),
             'kategori' => $item->jenisKegiatan?->nama ?? 'Kegiatan Gereja',
             'kebutuhan_kegiatan' => $item->kebutuhan_kegiatan,
             'pembicara' => $item->pembicara ? [[
                 'nama' => $item->pembicara->nama,
                 'jabatan' => $item->pembicara->jabatan ?: $item->pembicara->latar_belakang,
-                'foto_url' => $item->pembicara->foto ? (str_starts_with($item->pembicara->foto, 'http') ? $item->pembicara->foto : asset('storage/'.$item->pembicara->foto)) : null,
+                'foto_url' => $this->resolveImageUrl($item->pembicara->foto),
             ]] : [],
         ];
     }
@@ -180,5 +180,22 @@ class EventController extends Controller
         }
 
         return $item->peserta_count >= $item->kuota;
+    }
+
+    protected function resolveImageUrl(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, 'assets/')) {
+            return asset($path);
+        }
+
+        return asset('storage/' . ltrim($path, '/'));
     }
 }

@@ -8,21 +8,39 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Carbon;
 
 class JemaatController extends Controller
 {
     public function dashboard(Request $request): View
     {
-        $jemaat = $request->user()->jemaat;
+        $user = $request->user()->load('jemaat');
+        $jemaat = $user->jemaat;
 
         $upcomingQuery = $this->upcomingQuery($jemaat?->id);
         
         $upcomingCount = $upcomingQuery->count();
         $historyCount = $this->historyQuery($jemaat?->id)->count();
         
-        $recentUpcoming = $upcomingQuery->limit(3)->get();
+        $recentUpcoming = $upcomingQuery
+            ->limit(3)
+            ->get()
+            ->map(fn (Kegiatan $kegiatan): array => [
+                'nama' => $kegiatan->nama,
+                'detail_url' => route('events.show', $kegiatan->slug ?: $kegiatan->id),
+                'thumbnail_url' => $this->resolveImageUrl(is_array($kegiatan->foto) ? ($kegiatan->foto[0] ?? null) : $kegiatan->foto),
+                'kategori' => $kegiatan->jenisKegiatan?->nama ?? 'Umum',
+                'tanggal_label' => Carbon::parse($kegiatan->tanggal)->translatedFormat('l, d F Y'),
+                'jam_label' => Carbon::parse($kegiatan->jam_mulai)->format('H:i') . ' WIT',
+                'lokasi' => $kegiatan->lokasi,
+            ]);
 
-        return view('pages.jemaat.dashboard', compact('upcomingCount', 'historyCount', 'recentUpcoming'));
+        return view('pages.jemaat.dashboard', [
+            'userDisplayName' => $jemaat?->nama ?? $user->name,
+            'upcomingCount' => $upcomingCount,
+            'historyCount' => $historyCount,
+            'recentUpcoming' => $recentUpcoming,
+        ]);
     }
 
     public function upcoming(Request $request): View
@@ -126,5 +144,22 @@ class JemaatController extends Controller
             ->whereDate('tanggal', '<', now()->toDateString())
             ->orderByDesc('tanggal')
             ->orderByDesc('jam_mulai');
+    }
+
+    protected function resolveImageUrl(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, 'assets/')) {
+            return asset($path);
+        }
+
+        return asset('storage/' . ltrim($path, '/'));
     }
 }

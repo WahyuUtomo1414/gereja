@@ -98,7 +98,7 @@ class DocumentationController extends Controller
                 'latar_belakang' => $kegiatan->pembicara->latar_belakang,
             ] : null,
             'galeri' => $kegiatan->fotoKegiatan->map(fn ($foto): array => [
-                'nama' => $foto->nama,
+                'nama' => $foto->caption ?: $foto->nama,
                 'foto_url' => $this->resolveImageUrl($foto->foto),
             ])->all(),
         ];
@@ -116,6 +116,10 @@ class DocumentationController extends Controller
 
         if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
             return $path;
+        }
+
+        if (str_starts_with($path, 'assets/')) {
+            return asset($path);
         }
 
         return asset('storage/' . ltrim($path, '/'));

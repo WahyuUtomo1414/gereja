@@ -34,7 +34,6 @@ class HomeController extends Controller
             ->with('jenisKegiatan')
             ->where('active', true)
             ->whereIn('status', [
-                StatusKegiatan::DISETUJUI,
                 StatusKegiatan::PENDAFTARAN_DIBUKA,
                 StatusKegiatan::PENDAFTARAN_DITUTUP,
             ])
@@ -46,12 +45,13 @@ class HomeController extends Controller
             ->map(function (Kegiatan $kegiatan): array {
                 return [
                     'id' => $kegiatan->id,
+                    'slug' => $kegiatan->slug,
                     'nama' => $kegiatan->nama,
                     'kategori' => $kegiatan->jenisKegiatan?->nama ?? 'Kegiatan Gereja',
                     'tanggal_label' => $kegiatan->tanggal?->translatedFormat('d M Y') ?? '-',
-                    'jam_label' => $kegiatan->jam_mulai ? substr($kegiatan->jam_mulai, 0, 5).' WIB' : '-',
+                    'jam_label' => $kegiatan->jam_mulai ? substr($kegiatan->jam_mulai, 0, 5).' WIT' : '-',
                     'lokasi' => $kegiatan->lokasi ?: 'Lokasi akan diumumkan',
-                    'detail_url' => route('events.show', $kegiatan->id),
+                    'detail_url' => route('events.show', $kegiatan->slug ?: $kegiatan->id),
                 ];
             });
 

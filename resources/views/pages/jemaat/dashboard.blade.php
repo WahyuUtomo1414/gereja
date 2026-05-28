@@ -10,7 +10,7 @@
                 </span>
                 <div class="max-w-3xl space-y-3">
                     <h1 class="font-serif text-4xl leading-tight text-primary-900 sm:text-5xl">
-                        Selamat Datang, {{ auth()->user()->jemaat->nama ?? auth()->user()->name }}
+                        Selamat Datang, {{ $userDisplayName }}
                     </h1>
                     <p class="text-base leading-7 text-slate-600 sm:text-lg">
                         Kelola pendaftaran kegiatan Anda, pantau riwayat pelayanan, dan perbarui profil dengan mudah
@@ -88,17 +88,12 @@
 
                     <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                         @foreach ($recentUpcoming as $kegiatan)
-                            <a href="{{ route('events.show', $kegiatan->slug ?? $kegiatan->id) }}"
+                            <a href="{{ $kegiatan['detail_url'] }}"
                                 class="group flex flex-col bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300">
                                 <div class="relative h-40 overflow-hidden bg-slate-100">
-                                    @if ($kegiatan->foto)
-                                        @if (Str::startsWith($kegiatan->foto, 'http'))
-                                            <img src="{{ $kegiatan->foto }}" alt="{{ $kegiatan->nama }}"
-                                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                        @else
-                                            <img src="{{ Storage::url($kegiatan->foto) }}" alt="{{ $kegiatan->nama }}"
-                                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
-                                        @endif
+                                    @if ($kegiatan['thumbnail_url'])
+                                        <img src="{{ $kegiatan['thumbnail_url'] }}" alt="{{ $kegiatan['nama'] }}"
+                                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                                     @else
                                         <div
                                             class="w-full h-full flex items-center justify-center text-slate-400 bg-slate-200">
@@ -109,32 +104,31 @@
                                     <div class="absolute top-3 left-3">
                                         <span
                                             class="inline-flex items-center rounded-full bg-white/90 backdrop-blur-sm px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-primary-900 shadow-sm border border-white/50">
-                                            {{ $kegiatan->jenisKegiatan->nama ?? 'Umum' }}
+                                            {{ $kegiatan['kategori'] }}
                                         </span>
                                     </div>
                                 </div>
                                 <div class="p-5 flex-grow flex flex-col">
                                     <h3
                                         class="font-serif text-lg font-bold text-primary-900 mb-3 group-hover:text-secondary-600 transition-colors line-clamp-2">
-                                        {{ $kegiatan->nama }}
+                                        {{ $kegiatan['nama'] }}
                                     </h3>
 
                                     <div class="space-y-2 mt-auto pt-4 border-t border-slate-50">
                                         <div class="flex items-center gap-2 text-xs text-slate-500">
                                             <span
                                                 class="material-symbols-outlined text-[16px] text-secondary-500">calendar_today</span>
-                                            <span>{{ \Carbon\Carbon::parse($kegiatan->tanggal)->translatedFormat('l, d F Y') }}</span>
+                                            <span>{{ $kegiatan['tanggal_label'] }}</span>
                                         </div>
                                         <div class="flex items-center gap-2 text-xs text-slate-500">
                                             <span
                                                 class="material-symbols-outlined text-[16px] text-secondary-500">schedule</span>
-                                            <span>{{ \Carbon\Carbon::parse($kegiatan->jam_mulai)->format('H:i') }}
-                                                WIT</span>
+                                            <span>{{ $kegiatan['jam_label'] }}</span>
                                         </div>
                                         <div class="flex items-center gap-2 text-xs text-slate-500">
                                             <span
                                                 class="material-symbols-outlined text-[16px] text-secondary-500">location_on</span>
-                                            <span class="truncate">{{ $kegiatan->lokasi }}</span>
+                                            <span class="truncate">{{ $kegiatan['lokasi'] }}</span>
                                         </div>
                                     </div>
                                 </div>

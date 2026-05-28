@@ -36,7 +36,7 @@ class AppServiceProvider extends ServiceProvider
                 'nama' => $gereja?->nama ?? 'Gereja Protestan Maluku',
                 'short_name' => 'GPM',
                 'tagline' => 'Melayani jemaat dengan kasih dan dedikasi, bertumbuh bersama dalam iman dan pelayanan.',
-                'logo_url' => $gereja?->logo ? asset($gereja->logo) : asset('assets/logo.png'),
+                'logo_url' => $this->resolvePublicAssetUrl($gereja?->logo) ?? asset('assets/logo.png'),
                 'alamat' => $gereja?->alamat,
                 'no_tlpn' => $gereja?->no_tlpn,
                 'email' => $gereja?->email,
@@ -46,5 +46,22 @@ class AppServiceProvider extends ServiceProvider
                 'instagram_url' => $instagram,
             ]);
         });
+    }
+
+    protected function resolvePublicAssetUrl(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, 'assets/')) {
+            return asset($path);
+        }
+
+        return asset('storage/' . ltrim($path, '/'));
     }
 }

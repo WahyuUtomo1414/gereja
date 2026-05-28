@@ -1,21 +1,5 @@
 @props(['kegiatan'])
 
-@php
-$getCategoryBadgeClass = function ($category) {
-    $categoryLower = strtolower(trim($category));
-
-    return match (true) {
-        str_contains($categoryLower, 'ibadah') => 'bg-blue-50 text-blue-700 border border-blue-100',
-        str_contains($categoryLower, 'pemuda'), str_contains($categoryLower, 'remaja') => 'bg-amber-50 text-amber-700 border border-amber-100',
-        str_contains($categoryLower, 'sosial') => 'bg-emerald-50 text-emerald-700 border border-emerald-100',
-        str_contains($categoryLower, 'doa') => 'bg-indigo-50 text-indigo-700 border border-indigo-100',
-        str_contains($categoryLower, 'anak') => 'bg-rose-50 text-rose-700 border border-rose-100',
-        str_contains($categoryLower, 'keluarga') => 'bg-teal-50 text-teal-700 border border-teal-100',
-        default => 'bg-slate-50 text-slate-700 border border-slate-100',
-    };
-};
-@endphp
-
 <main class="flex-1">
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
         @forelse ($kegiatan as $item)
@@ -26,7 +10,7 @@ $getCategoryBadgeClass = function ($category) {
                          class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
 
                     <div class="absolute top-4 left-4">
-                        <span class="rounded-full px-3 py-1 font-sans text-xs font-semibold shadow-sm {{ $getCategoryBadgeClass($item['kategori']) }}">
+                        <span class="rounded-full border border-secondary-100 bg-secondary-50 px-3 py-1 font-sans text-xs font-semibold text-secondary-700 shadow-sm">
                             {{ $item['kategori'] }}
                         </span>
                     </div>

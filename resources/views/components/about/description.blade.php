@@ -1,5 +1,6 @@
 @props([
     'gereja' => null,
+    'logoUrl' => null,
 ])
 
 <div class="bg-white py-24">
@@ -8,9 +9,9 @@
             <!-- Image Side (Kiri) -->
             <div class="w-full lg:w-1/2">
                 <div class="relative rounded-[2rem] overflow-hidden shadow-2xl group">
-                    <img src="{{ $gereja?->logo ? asset($gereja->logo) : 'https://images.unsplash.com/photo-1438283173091-5dbf5c5a3206?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80' }}"
+                    <img src="{{ $logoUrl ?? 'https://images.unsplash.com/photo-1438283173091-5dbf5c5a3206?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80' }}"
                         alt="{{ $gereja?->nama ?? 'Gereja Protestan Maluku' }}"
-                        class="w-full h-[400px] md:h-[500px] {{ $gereja?->logo ? 'object-contain bg-slate-50 p-10' : 'object-cover' }} group-hover:scale-105 transition-transform duration-700">
+                        class="w-full h-[400px] md:h-[500px] {{ $logoUrl ? 'object-contain bg-slate-50 p-10' : 'object-cover' }} group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-primary-900 mix-blend-overlay opacity-10"></div>
                 </div>
             </div>

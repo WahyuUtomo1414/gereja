@@ -10,8 +10,8 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -44,12 +44,6 @@ class KegiatanForm
                             ->label('Nama')
                             ->required()
                             ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
-                            ->maxLength(255),
-                        TextInput::make('slug')
-                            ->label('Slug')
-                            ->required()
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
-                            ->unique(ignoreRecord: true)
                             ->maxLength(255),
                         TextInput::make('ringkasan')
                             ->label('Ringkasan')

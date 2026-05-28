@@ -49,8 +49,26 @@ class AboutController extends Controller
 
         return view('pages.about', [
             'gereja' => $gereja,
+            'logoUrl' => $this->resolveImageUrl($gereja?->logo),
             'firstMember' => $struktur->first(),
             'otherMembers' => $struktur->slice(1)->values(),
         ]);
+    }
+
+    protected function resolveImageUrl(?string $path): ?string
+    {
+        if (blank($path)) {
+            return null;
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, 'assets/')) {
+            return asset($path);
+        }
+
+        return asset('storage/' . ltrim($path, '/'));
     }
 }

@@ -134,6 +134,7 @@ class LaporanKegiatanSeeder extends Seeder
                     ],
                     [
                         'foto' => $foto['foto'],
+                        'caption' => $foto['nama'],
                         'active' => true,
                         'created_by' => $ketuaPelaksana?->id ?? 1,
                         'updated_by' => $ketuaPelaksana?->id ?? 1,
