@@ -1,6 +1,18 @@
 @props(['event'])
 
-<div x-data="{ showDaftarModal: false, showLoginPromptModal: false }" class="sticky top-24 space-y-6">
+<div x-data="{ showDaftarModal: {{ $errors->any() ? 'true' : 'false' }}, showLoginPromptModal: false }" class="sticky top-24 space-y-6">
+    @if (session('registration_success'))
+        <div class="rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-sm text-emerald-700 shadow-sm">
+            {{ session('registration_success') }}
+        </div>
+    @endif
+
+    @if (session('registration_error'))
+        <div class="rounded-2xl border border-red-100 bg-red-50 px-4 py-3 text-sm text-red-700 shadow-sm">
+            {{ session('registration_error') }}
+        </div>
+    @endif
+
     <div class="rounded-2xl border border-slate-100 bg-white p-6 shadow-sm">
         <h3 class="mb-6 border-b border-slate-100 pb-4 font-serif text-lg font-bold text-primary-900">
             Ringkasan Kegiatan
@@ -136,7 +148,7 @@
                     </button>
                 </div>
 
-                <form action="#" method="POST" class="space-y-4 p-6" onsubmit="event.preventDefault(); alert('Pendaftaran berhasil dikirim!'); showDaftarModal = false;">
+                <form action="{{ route('events.register', $event['slug'] ?: $event['id']) }}" method="POST" class="space-y-4 p-6">
                     @csrf
 
                     <div class="flex gap-3 rounded-2xl border border-blue-100 bg-blue-50 p-4 text-xs leading-normal text-blue-800">
@@ -162,15 +174,21 @@
 
                     <div>
                         <label class="mb-1.5 block font-sans text-xs font-semibold text-primary-900">Catatan Khusus</label>
-                        <textarea name="catatan" rows="3" placeholder="Tambahkan catatan bila diperlukan..." class="w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 font-sans text-sm text-slate-800 transition-all focus:border-secondary-500 focus:outline-none focus:ring-1 focus:ring-secondary-500"></textarea>
+                        <textarea name="catatan" rows="3" placeholder="Tambahkan catatan bila diperlukan..." class="w-full resize-none rounded-xl border border-slate-200 bg-white px-4 py-3 font-sans text-sm text-slate-800 transition-all focus:border-secondary-500 focus:outline-none focus:ring-1 focus:ring-secondary-500">{{ old('catatan') }}</textarea>
+                        @error('catatan')
+                            <p class="mt-1.5 text-xs text-red-500">{{ $message }}</p>
+                        @enderror
                     </div>
 
                     <div class="flex items-start gap-2.5 pt-2">
-                        <input type="checkbox" id="modal-consent" required class="mt-1 h-4 w-4 rounded border-slate-300 text-secondary-600 focus:ring-secondary-500" />
+                        <input type="checkbox" id="modal-consent" name="consent" value="1" @checked(old('consent')) required class="mt-1 h-4 w-4 rounded border-slate-300 text-secondary-600 focus:ring-secondary-500" />
                         <label for="modal-consent" class="cursor-pointer font-sans text-[11px] leading-normal font-light text-slate-500">
                             Saya menyatakan data di atas sudah benar dan bersedia mematuhi tata tertib kegiatan yang ditentukan.
                         </label>
                     </div>
+                    @error('consent')
+                        <p class="text-xs text-red-500">{{ $message }}</p>
+                    @enderror
 
                     <div class="mt-6 flex justify-end gap-3 border-t border-slate-100 bg-white pt-4">
                         <button type="button" @click="showDaftarModal = false" class="rounded-xl border border-slate-200 px-5 py-3 font-sans text-xs font-semibold text-slate-700 transition-all hover:bg-slate-50 active:scale-[0.98]">

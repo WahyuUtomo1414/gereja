@@ -169,6 +169,7 @@ class EventController extends Controller
                 'nama' => $item->pembicara->nama,
                 'jabatan' => $item->pembicara->jabatan ?: $item->pembicara->latar_belakang,
                 'foto_url' => $this->resolveImageUrl($item->pembicara->foto),
+                'has_photo' => filled($item->pembicara->foto),
             ]] : [],
         ];
     }

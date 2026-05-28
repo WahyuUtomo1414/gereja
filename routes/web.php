@@ -6,6 +6,7 @@ use App\Http\Controllers\PageController;
 use App\Http\Controllers\Frontend\AboutController;
 use App\Http\Controllers\Frontend\DocumentationController;
 use App\Http\Controllers\Frontend\EventController;
+use App\Http\Controllers\Frontend\EventRegistrationController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -31,6 +32,10 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/dashboard', [AuthenticatedSessionController::class, 'dashboardRedirect'])->name('dashboard');
     Route::post('/keluar', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 });
+
+Route::post('/kegiatan/{idOrSlug}/daftar', [EventRegistrationController::class, 'store'])
+    ->middleware(['auth', 'jamaat'])
+    ->name('events.register');
 
 Route::prefix('jemaat')
     ->name('jamaat.')
