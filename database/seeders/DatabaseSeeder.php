@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             JenisKegiatanSeeder::class,
             PembicaraSeeder::class,
             KegiatanSeeder::class,
+            LaporanKegiatanSeeder::class,
         ]);
     }
 }

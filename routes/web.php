@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JemaatController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\Frontend\AboutController;
+use App\Http\Controllers\Frontend\DocumentationController;
 use App\Http\Controllers\Frontend\EventController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
@@ -13,8 +14,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/tentang', [AboutController::class, 'index'])->name('about');
 Route::get('/kegiatan', [EventController::class, 'index'])->name('events.index');
 Route::get('/kegiatan/{id}', [EventController::class, 'show'])->name('events.show');
-Route::get('/dokumentasi', [PageController::class, 'docs'])->name('docs.index');
-Route::get('/dokumentasi/{id}', [PageController::class, 'docShow'])->name('docs.show');
+Route::get('/dokumentasi', [DocumentationController::class, 'index'])->name('docs.index');
+Route::get('/dokumentasi/{id}', [DocumentationController::class, 'show'])->name('docs.show');
 Route::get('/pengajuan-acara', [PageController::class, 'proposeEvent'])->name('events.propose');
 Route::get('/kontak', [PageController::class, 'contact'])->name('contact');
 

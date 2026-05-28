@@ -1,3 +1,5 @@
+@props(['filters'])
+
 <header class="mb-12 text-center">
     <h1 class="text-4xl md:text-5xl font-bold font-serif text-primary-900 mb-4">
         Laporan & Dokumentasi Kegiatan
@@ -13,7 +15,7 @@
         </span>
         <input type="text" 
                name="search"
-               value="{{ request('search') }}"
+               value="{{ $filters['search'] }}"
                placeholder="Cari dokumentasi..." 
                class="w-full bg-white border border-slate-200 rounded-2xl py-3.5 pl-12 pr-4 text-sm text-slate-800 focus:outline-none focus:border-secondary-500 focus:ring-1 focus:ring-secondary-500 transition-all shadow-sm" />
     </form>
