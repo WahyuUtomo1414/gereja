@@ -15,10 +15,14 @@ class JemaatController extends Controller
     {
         $jemaat = $request->user()->jemaat;
 
-        $upcomingCount = $this->upcomingQuery($jemaat?->id)->count();
+        $upcomingQuery = $this->upcomingQuery($jemaat?->id);
+        
+        $upcomingCount = $upcomingQuery->count();
         $historyCount = $this->historyQuery($jemaat?->id)->count();
+        
+        $recentUpcoming = $upcomingQuery->limit(3)->get();
 
-        return view('pages.jemaat.dashboard', compact('upcomingCount', 'historyCount'));
+        return view('pages.jemaat.dashboard', compact('upcomingCount', 'historyCount', 'recentUpcoming'));
     }
 
     public function upcoming(Request $request): View
