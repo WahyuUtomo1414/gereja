@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Sambutans;
 use App\Filament\Resources\Sambutans\Pages\CreateSambutan;
 use App\Filament\Resources\Sambutans\Pages\EditSambutan;
 use App\Filament\Resources\Sambutans\Pages\ListSambutans;
+use App\Filament\Resources\Sambutans\Pages\ViewSambutan;
 use App\Filament\Resources\Sambutans\Schemas\SambutanForm;
+use App\Filament\Resources\Sambutans\Schemas\SambutanInfolist;
 use App\Filament\Resources\Sambutans\Tables\SambutansTable;
 use App\Models\Sambutan;
 use BackedEnum;
@@ -35,9 +37,23 @@ class SambutanResource extends Resource
         return SambutanForm::configure($schema);
     }
 
+    public static function infolist(Schema $schema): Schema
+    {
+        return SambutanInfolist::configure($schema);
+    }
+
     public static function table(Table $table): Table
     {
         return SambutansTable::configure($table);
+    }
+
+    public static function canCreate(): bool
+    {
+        return static::getModel()::query()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ])
+            ->doesntExist();
     }
 
     public static function getEloquentQuery(): Builder
@@ -60,6 +76,7 @@ class SambutanResource extends Resource
         return [
             'index' => ListSambutans::route('/'),
             'create' => CreateSambutan::route('/create'),
+            'view' => ViewSambutan::route('/{record}'),
             'edit' => EditSambutan::route('/{record}/edit'),
         ];
     }

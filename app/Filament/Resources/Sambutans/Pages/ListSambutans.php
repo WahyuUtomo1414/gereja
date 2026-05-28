@@ -3,17 +3,28 @@
 namespace App\Filament\Resources\Sambutans\Pages;
 
 use App\Filament\Resources\Sambutans\SambutanResource;
-use Filament\Actions\CreateAction;
+use App\Models\Sambutan;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ListSambutans extends ListRecords
 {
     protected static string $resource = SambutanResource::class;
 
-    protected function getHeaderActions(): array
+    public function mount(): void
     {
-        return [
-            CreateAction::make(),
-        ];
+        $record = Sambutan::query()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ])
+            ->first();
+
+        if ($record) {
+            $this->redirect(SambutanResource::getUrl('view', ['record' => $record]));
+
+            return;
+        }
+
+        $this->redirect(SambutanResource::getUrl('create'));
     }
 }
