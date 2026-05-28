@@ -41,7 +41,7 @@ class KegiatanSeeder extends Seeder
                 'kuota' => null,
                 'thumbnail' => 'https://images.unsplash.com/photo-1544427928-c49cd7f40173?auto=format&fit=crop&w=1200&q=80',
                 'foto' => null,
-                'kebutuhan_kegiatan' => 'Jemaat diharapkan hadir 15 menit sebelum ibadah dimulai dan menjaga ketertiban selama ibadah berlangsung.',
+                'kebutuhan_kegiatan' => "Terbuka untuk jemaat dan pengunjung umum.\nJemaat diharapkan hadir 15 menit sebelum ibadah dimulai.\nMengikuti ibadah dengan tertib dan menjaga suasana khidmat.\nJika mendaftar sebagai peserta, pastikan data akun sudah sesuai.",
                 'status' => StatusKegiatan::PENDAFTARAN_DIBUKA->value,
             ],
             [
@@ -58,7 +58,7 @@ class KegiatanSeeder extends Seeder
                 'kuota' => 100,
                 'thumbnail' => 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1200&q=80',
                 'foto' => null,
-                'kebutuhan_kegiatan' => 'Peserta membawa Alkitab, alat tulis, air minum pribadi, dan mengenakan pakaian yang sopan serta nyaman untuk kegiatan luar ruangan.',
+                'kebutuhan_kegiatan' => "Terbuka untuk jemaat dan pengunjung umum.\nJemaat diharapkan hadir 15 menit sebelum ibadah dimulai.\nMengikuti ibadah dengan tertib dan menjaga suasana khidmat.\nJika mendaftar sebagai peserta, pastikan data akun sudah sesuai.",
                 'status' => StatusKegiatan::PENDAFTARAN_DIBUKA->value,
             ],
             [
@@ -75,7 +75,7 @@ class KegiatanSeeder extends Seeder
                 'kuota' => 50,
                 'thumbnail' => 'https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?auto=format&fit=crop&w=1200&q=80',
                 'foto' => null,
-                'kebutuhan_kegiatan' => 'Peserta pelayanan diharapkan hadir tepat waktu, membawa perlengkapan pribadi secukupnya, dan siap mengikuti briefing panitia sebelum keberangkatan.',
+                'kebutuhan_kegiatan' => "Terbuka untuk jemaat dan pengunjung umum.\nJemaat diharapkan hadir 15 menit sebelum ibadah dimulai.\nMengikuti ibadah dengan tertib dan menjaga suasana khidmat.\nJika mendaftar sebagai peserta, pastikan data akun sudah sesuai.",
                 'status' => StatusKegiatan::PENDAFTARAN_DIBUKA->value,
             ],
         ];

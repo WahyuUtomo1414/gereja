@@ -103,11 +103,7 @@ class KegiatanForm
                             ->image()
                             ->imageEditor()
                             ->columnSpanFull(),
-                        Textarea::make('kebutuhan_kegiatan')
-                            ->label('Kebutuhan Kegiatan')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
-                            ->rows(4)
-                            ->columnSpanFull(),
+
                     ])
                     ->columns(3),
                 Section::make('Review Sekretaris')

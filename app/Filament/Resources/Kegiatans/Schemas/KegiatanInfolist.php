@@ -91,10 +91,7 @@ class KegiatanInfolist
                             ->height(220)
                             ->defaultImageUrl('https://ui-avatars.com/api/?name=Kegiatan&background=f8fafc&color=0f172a')
                             ->columnSpanFull(),
-                        TextEntry::make('kebutuhan_kegiatan')
-                            ->label('Kebutuhan Kegiatan')
-                            ->columnSpanFull()
-                            ->placeholder('-'),
+
                         TextEntry::make('catatan_review')
                             ->label('Catatan Review')
                             ->columnSpanFull()

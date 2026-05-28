@@ -8,7 +8,7 @@
             <div class="space-y-12 lg:col-span-8">
                 <x-events.detail.info :event="$event" />
                 <x-events.detail.speakers :speakers="$event['pembicara']" />
-                <x-events.detail.requirements :requirements="$event['kebutuhan_kegiatan']" />
+                <x-events.detail.requirements />
             </div>
 
             <div class="relative lg:col-span-4">
