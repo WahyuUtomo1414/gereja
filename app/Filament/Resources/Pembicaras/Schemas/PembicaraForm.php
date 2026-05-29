@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Pembicaras\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
@@ -24,9 +25,12 @@ class PembicaraForm
                         TextInput::make('jabatan')
                             ->label('Jabatan')
                             ->maxLength(128),
-                        TextInput::make('foto')
-                            ->label('Path / URL Foto')
-                            ->maxLength(255),
+                        FileUpload::make('foto')
+                            ->label('Foto')
+                            ->image()
+                            ->disk('public')
+                            ->directory('pembicara')
+                            ->imageEditor(),
                         Toggle::make('active')
                             ->label('Aktif')
                             ->default(true),
