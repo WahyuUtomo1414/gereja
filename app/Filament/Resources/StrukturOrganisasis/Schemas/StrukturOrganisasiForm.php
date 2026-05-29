@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\StrukturOrganisasis\Schemas;
 
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -24,9 +25,12 @@ class StrukturOrganisasiForm
                             ->label('Jabatan')
                             ->required()
                             ->maxLength(128),
-                        TextInput::make('foto')
-                            ->label('Path / URL Foto')
-                            ->maxLength(255),
+                        FileUpload::make('foto')
+                            ->label('Foto')
+                            ->image()
+                            ->disk('public')
+                            ->directory('struktur_organisasi')
+                            ->imageEditor(),
                         TextInput::make('order')
                             ->label('Urutan')
                             ->required()
