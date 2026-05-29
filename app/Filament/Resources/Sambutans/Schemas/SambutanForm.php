@@ -29,6 +29,7 @@ class SambutanForm
                             ->label('Foto')
                             ->disk('public')
                             ->directory('sambutan')
+                            ->visibility('public')
                             ->image()
                             ->imageEditor(),
                         Toggle::make('active')

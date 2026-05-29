@@ -32,27 +32,27 @@ class KegiatanForm
                             ->relationship('jenisKegiatan', 'nama')
                             ->searchable()
                             ->preload()
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->required(),
                         Select::make('pembicara_id')
                             ->label('Pembicara')
                             ->relationship('pembicara', 'nama')
                             ->searchable()
                             ->preload()
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record)),
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record)),
                         TextInput::make('nama')
                             ->label('Nama')
                             ->required()
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->maxLength(255),
                         TextInput::make('ringkasan')
                             ->label('Ringkasan')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->maxLength(255)
                             ->columnSpanFull(),
                         RichEditor::make('deskripsi')
                             ->label('Deskripsi')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->columnSpanFull(),
                     ])
                     ->columns(2),
@@ -61,20 +61,20 @@ class KegiatanForm
                     ->schema([
                         DatePicker::make('tanggal')
                             ->label('Tanggal')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->required(),
                         TimePicker::make('jam_mulai')
                             ->label('Jam Mulai')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->required()
                             ->seconds(false),
                         TimePicker::make('jam_selesai')
                             ->label('Jam Selesai')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->seconds(false),
                         Textarea::make('lokasi')
                             ->label('Lokasi')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->rows(3)
                             ->columnSpanFull(),
                     ])
@@ -84,12 +84,12 @@ class KegiatanForm
                     ->schema([
                         TextInput::make('kuota')
                             ->label('Kuota')
-                            ->disabled(fn (?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
+                            ->disabled(fn(?Kegiatan $record): bool => self::submissionFieldsAreLocked($record))
                             ->numeric()
                             ->minValue(0),
                         Select::make('status')
                             ->label('Status')
-                            ->options(fn (?Kegiatan $record): array => self::statusOptions($record))
+                            ->options(fn(?Kegiatan $record): array => self::statusOptions($record))
                             ->default(StatusKegiatan::MENUNGGU_REVIEW->value)
                             ->live()
                             ->required(),
@@ -100,6 +100,7 @@ class KegiatanForm
                             ->label('Thumbnail')
                             ->disk('public')
                             ->directory('kegiatan')
+                            ->visibility('public')
                             ->image()
                             ->imageEditor()
                             ->columnSpanFull(),
@@ -108,19 +109,19 @@ class KegiatanForm
                     ->columns(3),
                 Section::make('Review Sekretaris')
                     ->columnSpanFull()
-                    ->visible(fn (?Kegiatan $record): bool => self::canSeeReviewSection($record))
+                    ->visible(fn(?Kegiatan $record): bool => self::canSeeReviewSection($record))
                     ->schema([
                         Textarea::make('catatan_review')
                             ->label('Catatan Review')
                             ->rows(4)
-                            ->required(fn (Get $get): bool => in_array($get('status'), [
+                            ->required(fn(Get $get): bool => in_array($get('status'), [
                                 StatusKegiatan::PERLU_REVISI->value,
                                 StatusKegiatan::DITOLAK->value,
                             ], true))
-                            ->disabled(fn (): bool => ! self::currentUserCanReview()),
+                            ->disabled(fn(): bool => ! self::currentUserCanReview()),
                         Placeholder::make('review_meta')
                             ->label('Meta Review')
-                            ->content(fn (?Kegiatan $record): string => $record && $record->tanggal_review
+                            ->content(fn(?Kegiatan $record): string => $record && $record->tanggal_review
                                 ? sprintf(
                                     'Direview oleh %s pada %s',
                                     $record->reviewedBy?->name ?? '-',
@@ -130,22 +131,22 @@ class KegiatanForm
                     ]),
                 Section::make('Laporan Kegiatan')
                     ->columnSpanFull()
-                    ->visible(fn (?Kegiatan $record): bool => self::canSeeReportSection($record))
+                    ->visible(fn(?Kegiatan $record): bool => self::canSeeReportSection($record))
                     ->schema([
                         RichEditor::make('laporan')
                             ->label('Laporan')
-                            ->required(fn (Get $get): bool => $get('status') === StatusKegiatan::LAPORAN->value),
+                            ->required(fn(Get $get): bool => $get('status') === StatusKegiatan::LAPORAN->value),
                         TextInput::make('jumlah_peserta_hadir')
                             ->label('Jumlah Peserta Hadir')
                             ->numeric()
                             ->minValue(0)
-                            ->required(fn (Get $get): bool => $get('status') === StatusKegiatan::LAPORAN->value),
+                            ->required(fn(Get $get): bool => $get('status') === StatusKegiatan::LAPORAN->value),
                         Textarea::make('catatan_laporan')
                             ->label('Catatan Laporan')
                             ->rows(4),
                         Placeholder::make('tanggal_laporan_display')
                             ->label('Tanggal Laporan')
-                            ->content(fn (?Kegiatan $record): string => $record?->tanggal_laporan?->format('d M Y H:i') ?? 'Akan diisi otomatis saat status menjadi laporan.'),
+                            ->content(fn(?Kegiatan $record): string => $record?->tanggal_laporan?->format('d M Y H:i') ?? 'Akan diisi otomatis saat status menjadi laporan.'),
                     ])
                     ->columns(2),
             ]);
@@ -161,7 +162,7 @@ class KegiatanForm
 
         if ($user->isSuperAdmin()) {
             return collect(StatusKegiatan::cases())
-                ->mapWithKeys(fn (StatusKegiatan $status) => [$status->value => $status->label()])
+                ->mapWithKeys(fn(StatusKegiatan $status) => [$status->value => $status->label()])
                 ->all();
         }
 
@@ -171,7 +172,7 @@ class KegiatanForm
                 StatusKegiatan::PERLU_REVISI,
                 StatusKegiatan::DITOLAK,
                 StatusKegiatan::DISETUJUI,
-            ])->mapWithKeys(fn (StatusKegiatan $status) => [$status->value => $status->label()])->all();
+            ])->mapWithKeys(fn(StatusKegiatan $status) => [$status->value => $status->label()])->all();
         }
 
         if (! $record) {
@@ -205,7 +206,7 @@ class KegiatanForm
         };
 
         return collect($allowed)
-            ->mapWithKeys(fn (StatusKegiatan $status) => [$status->value => $status->label()])
+            ->mapWithKeys(fn(StatusKegiatan $status) => [$status->value => $status->label()])
             ->all();
     }
 

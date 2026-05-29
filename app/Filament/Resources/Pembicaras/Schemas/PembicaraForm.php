@@ -29,6 +29,7 @@ class PembicaraForm
                             ->label('Foto')
                             ->image()
                             ->disk('public')
+                            ->visibility('public')
                             ->directory('pembicara')
                             ->imageEditor(),
                         Toggle::make('active')

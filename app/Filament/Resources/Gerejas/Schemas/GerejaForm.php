@@ -28,6 +28,7 @@ class GerejaForm
                         FileUpload::make('logo')
                             ->label('Logo')
                             ->disk('public')
+                            ->visibility('public')
                             ->directory('gereja')
                             ->image()
                             ->imageEditor(),

@@ -33,6 +33,7 @@ class FotoKegiatanForm
                             ->directory('foto_kegiatan')
                             ->image()
                             ->imageEditor()
+                            ->visibility('public')
                             ->required()
                             ->columnSpanFull(),
                         Toggle::make('active')

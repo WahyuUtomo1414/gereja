@@ -39,6 +39,7 @@ class JemaatForm
                             ->label('Foto')
                             ->disk('public')
                             ->directory('jemaat')
+                            ->visibility('public')
                             ->image()
                             ->imageEditor(),
                         Textarea::make('alamat')

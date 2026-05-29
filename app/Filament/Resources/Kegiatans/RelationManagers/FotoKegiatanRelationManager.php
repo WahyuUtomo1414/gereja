@@ -40,6 +40,7 @@ class FotoKegiatanRelationManager extends RelationManager
                             ->label('Foto')
                             ->disk('public')
                             ->directory('foto_kegiatan')
+                            ->visibility('public')
                             ->image()
                             ->imageEditor()
                             ->required(),

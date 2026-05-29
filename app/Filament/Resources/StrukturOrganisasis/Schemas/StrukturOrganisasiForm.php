@@ -27,6 +27,7 @@ class StrukturOrganisasiForm
                             ->maxLength(128),
                         FileUpload::make('foto')
                             ->label('Foto')
+                            ->visibility('public')
                             ->image()
                             ->disk('public')
                             ->directory('struktur_organisasi')
