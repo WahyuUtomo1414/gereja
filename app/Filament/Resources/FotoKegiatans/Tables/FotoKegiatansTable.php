@@ -10,6 +10,7 @@ use Filament\Actions\ForceDeleteAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TrashedFilter;
@@ -32,9 +33,27 @@ class FotoKegiatansTable
                     ->sortable()
                     ->wrap()
                     ->placeholder('-'),
-                TextColumn::make('foto')
+                ImageColumn::make('foto')
                     ->label('Foto')
-                    ->limit(50)
+                    ->getStateUsing(function ($record): ?string {
+                        $path = $record->foto;
+
+                        if (blank($path)) {
+                            return null;
+                        }
+
+                        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+                            return $path;
+                        }
+
+                        if (str_starts_with($path, 'assets/')) {
+                            return asset($path);
+                        }
+
+                        return asset('storage/' . ltrim($path, '/'));
+                    })
+                    ->square()
+                    ->size(56)
                     ->toggleable(),
                 IconColumn::make('active')
                     ->label('Aktif')
